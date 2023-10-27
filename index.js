@@ -2,9 +2,10 @@ import express from "express";
 import dotenv from 'dotenv'
 import morgan from "morgan";
 import connectDB from "./config/db.js";
+import cors from "cors"
+
 import authRoutes from "./routes/authRoutes.js"
 import docsRoutes from "./routes/docsRoutes.js"
-import multer from "multer";
 // configure env : 
 dotenv.config();
 
@@ -16,9 +17,9 @@ connectDB();
 const app = express()
 
 
-
 // middlewares
 // parses the JSON data and makes it available as JavaScript objects 
+app.use(cors());
 app.use(express.json())
 // For incomming HTTP requests
 app.use(morgan('dev'))

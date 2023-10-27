@@ -51,3 +51,49 @@ export const isAdmin = async (req, res, next) => {
         })
     }
 }
+export const isTeacher = async (req, res, next) => {
+    try {
+        const user = await userModel.findById(req.user._id);
+
+        if (user.role !== "teacher") {
+            return res.status(200).send({
+                success: false,
+                message: 'Unauthorized access'
+            })
+        }
+        else {
+            next();
+        }
+
+    }
+    catch (error) {
+        console.log(error)
+        res.status(401).send({
+            success: false,
+            message: 'Error in teacher middleware',
+        })
+    }
+}
+export const isStudent = async (req, res, next) => {
+    try {
+        const user = await userModel.findById(req.user._id);
+
+        if (user.role !== "student") {
+            return res.status(200).send({
+                success: false,
+                message: 'Unauthorized access'
+            })
+        }
+        else {
+            next();
+        }
+
+    }
+    catch (error) {
+        console.log(error)
+        res.status(401).send({
+            success: false,
+            message: 'Error in student middleware',
+        })
+    }
+}

@@ -61,7 +61,7 @@ export const getDocsController = async (req, res) => {
 
 
         res.status(200).send({
-            status: "success",
+            success: "true",
             message: "Docs retrieved successfully",
             documents
         })
