@@ -46,6 +46,7 @@ export const docsuploadController = async (req, res) => {
     }
 }
 
+// student retrieves his docs
 export const getDocsController = async (req, res) => {
     try {
 
@@ -74,3 +75,4 @@ export const getDocsController = async (req, res) => {
         })
     }
 }
+

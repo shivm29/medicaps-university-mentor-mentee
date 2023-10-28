@@ -97,3 +97,38 @@ export const isStudent = async (req, res, next) => {
         })
     }
 }
+
+
+// if the id of teacher matches with the assigned_teacher field of the student of whom the document is to be accessed : next() 
+// else success : false
+export const isAssignedTeacher = async (req, res, next) => {
+    try {
+
+        const { id: studentID } = req.params
+        const student = await userModel.findById(studentID);
+
+        console.log("studentID : ", studentID);
+        console.log("req.user._id", req.user._id)
+        console.log("assigned teacher : ", student.assigned_teacher.toString())
+
+        if (student && student.assigned_teacher.toString() === req.user._id) {
+            next();
+        }
+        else {
+            return res.status(200).send({
+                success: false,
+                message: 'You are not authorised to access this information'
+            })
+        }
+
+
+
+
+    } catch (error) {
+        console.log(error)
+        res.status(401).send({
+            success: false,
+            message: 'Error in assigned teacher middleware',
+        })
+    }
+}

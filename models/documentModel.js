@@ -18,6 +18,10 @@ const docsSchema = new mongoose.Schema({
     document: {
         data: Buffer,
         contentType: String
+    },
+    status: {
+        type: String,
+        default: "pending",
     }
 }, { timestamps: true })
 

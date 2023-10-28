@@ -6,6 +6,7 @@ import AdminRoute from "./components/protected_routes/AdminRoute";
 import AdminHome from "./pages/home_pages/AdminHome";
 import TeacherRoute from "./components/protected_routes/TeacherRoute";
 import TeacherHome from "./pages/home_pages/TeacherHome";
+import StudentDetails from "./pages/StudentDetails";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
 
         <Route path="/teacher" element={<TeacherRoute />}>
           <Route path="/teacher" element={<TeacherHome />} />
+          <Route path="/teacher/student-details/:id" element={<StudentDetails />} />
         </Route>
 
 
