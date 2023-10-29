@@ -85,22 +85,46 @@ export const loginController = async (req, res) => {
             success: true,
             message: 'Logged in successfully',
             user: {
-                id: existingUser._id,
                 name: existingUser.name,
                 email: existingUser.email,
-                role: existingUser.role,
-                teacherId: existingUser.teacherId,
+                role : existingUser.role
             },
             token,
         })
     }
     catch (error) {
-        console.log(error)
         res.status(500).send({
             success: false,
-            message: "Error in login"
+            message: "Error in login",
+            error
         })
     }
 
 
 };
+
+export const getRoleController = async (req, res) => {
+    try {
+        const token = req.headers.authorization;
+
+        const decoded = JWT.verify(token, process.env.JWT_SECRET)
+
+        const user_id = decoded._id;
+
+        const user = await userModel.findById(user_id).select("role")
+
+        if (user) {
+            res.status(200).send({
+                success: true,
+                role: user.role
+            })
+        }
+
+    } catch (error) {
+        res.status(500).send({
+            success: false,
+            message: "Error in getting role",
+            error
+        })
+    }
+}

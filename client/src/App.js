@@ -13,6 +13,8 @@ function App() {
     <>
       <Routes>
 
+        <Route path="/" element={<Login />} />
+
         <Route path="/student" element={<StudentRoute />}>
           <Route path="/student" element={<StudentHome />} />
         </Route>
@@ -26,8 +28,6 @@ function App() {
           <Route path="/teacher/student-details/:id" element={<StudentDetails />} />
         </Route>
 
-
-        <Route path="/login" element={<Login />} />
       </Routes>
     </>
   );

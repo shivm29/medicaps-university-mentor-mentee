@@ -8,6 +8,6 @@ const router = express.Router();
 // routing 
 // get assigned students 
 // here id is the id of teacher to whom students are assigned
-router.get('/get-assigned-students/:id', requireSignIn, isTeacher, getAssignedStudents)
+router.get('/get-assigned-students', requireSignIn, isTeacher, getAssignedStudents)
 
 export default router

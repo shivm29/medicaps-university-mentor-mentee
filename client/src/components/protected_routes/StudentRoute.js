@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom'
 import axios from 'axios';
 import Login from '../../pages/auth/Login';
 
+
 export default function StudentRoute() {
     const [ok, setOk] = useState(false);
     const [auth, setAuth] = useAuth();

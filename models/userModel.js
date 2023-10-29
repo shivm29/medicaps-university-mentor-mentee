@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema({
     },
     assigned_teacher: {
         type: mongoose.Schema.Types.ObjectId,
-        default: null
+        default: ""
     }
 }, { timestamps: true })
 

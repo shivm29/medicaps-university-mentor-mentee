@@ -13,7 +13,7 @@ const TeacherHome = () => {
 
     const getAssignedStudentsHandler = async () => {
         try {
-            const res = await axios.get(`${baseURL}/api/v1/students/get-assigned-students/${auth?.user?.id}`)
+            const res = await axios.get(`${baseURL}/api/v1/students/get-assigned-students`)
 
             console.log("res", res)
             setStudents(res.data.students)
