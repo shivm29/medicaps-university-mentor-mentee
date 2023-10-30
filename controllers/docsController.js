@@ -136,3 +136,35 @@ export const approveDocumentController = async (req, res) => {
         });
     }
 };
+
+
+
+export const getDocByIdConroller = async (req, res) => {
+    try {
+
+        const { id: doc_id } = req.params
+
+        const document = await documentModel.findById(doc_id);
+
+        if (!document) {
+            return res.status(201).send({
+                success: false,
+                message: "No documents found",
+            });
+        }
+
+
+        res.status(200).send({
+            success: "true",
+            message: "Doc retrieved successfully",
+            document
+        })
+
+    } catch (error) {
+        res.status(500).send({
+            success: false,
+            message: "Error in retrieving documents",
+            error
+        })
+    }
+}

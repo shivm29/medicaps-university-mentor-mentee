@@ -37,7 +37,7 @@ const Login = () => {
 
         localStorage.setItem('auth', JSON.stringify(res.data));
         navigate(`/${res?.data?.user?.role}`);
-       
+
       } else {
         window.alert("Login failed");
       }
@@ -47,15 +47,35 @@ const Login = () => {
   }
 
   return (
-    <section>
+    <div className='flex h-screen w-full justify-center items-center font-Poppins' >
+      {/* form container */}
+      <div className='flex flex-col border rounded-lg h-fit md:w-1/3 w-96 p-4 ' >
+        <div className='flex p-4 justify-center mb-10 '  >
+          <img src="/images/logo-navbar.png" alt="" />
+        </div>
+        <form onSubmit={handleLogin} className='flex flex-col' >
+          <h1 className=' text-2xl mb-3 ' >Login Form</h1>
+          <input value={email} onChange={(e) => setEmail(e.target.value)} className='focus:outline-none p-3 border my-3' type="email" placeholder='Enter Email' />
+          <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className='focus:outline-none p-3 border my-3' placeholder='Enter Password' />
+          <button type='submit' className='flex justify-center items-center p-3  bg-medicaps text-white font-semibold my-5 hover:scale-95 ease-in-out duration-300   ' >Login</button>
+        </form>
+      </div>
+    </div>
+  )
+}
+
+export default Login;
+
+
+/**
+ 
+ <section className=' bg-black text-white ' >
       <form onSubmit={handleLogin}>
-        <h1>Login Form</h1>
+        <h1 >Login Form</h1>
         <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder='Enter Email' />
         <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder='Enter Password' />
         <button type='submit'>Login</button>
       </form>
     </section>
-  )
-}
 
-export default Login;
+ */

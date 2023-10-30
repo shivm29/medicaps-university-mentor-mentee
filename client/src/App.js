@@ -7,6 +7,7 @@ import AdminHome from "./pages/home_pages/AdminHome";
 import TeacherRoute from "./components/protected_routes/TeacherRoute";
 import TeacherHome from "./pages/home_pages/TeacherHome";
 import StudentDetails from "./pages/StudentDetails";
+import RenderDocument from "./pages/RenderDocument";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
 
         <Route path="/student" element={<StudentRoute />}>
           <Route path="/student" element={<StudentHome />} />
+          <Route path="/student/document/:id" element={<RenderDocument />} />
         </Route>
 
         <Route path="/admin" element={<AdminRoute />}>
