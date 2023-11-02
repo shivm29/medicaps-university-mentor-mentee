@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link } from "react-router-dom"
 import Navbar from '../../components/Navbar';
 import ReactLoading from "react-loading"
+import { toast, ToastContainer } from "react-toastify"
 const TeacherHome = () => {
 
     const [auth, setAuth] = useAuth();
@@ -24,11 +25,10 @@ const TeacherHome = () => {
 
         window.location.reload()
 
-        window.alert("You are being logged out")
-
+        toast("Logged out successfully")
 
     }
-    
+
     const getAssignedStudentsHandler = async () => {
         try {
             setFetchingStudents(true)
@@ -52,16 +52,28 @@ const TeacherHome = () => {
     console.log(studentID)
 
     return (
-        <div className='font-Poppins' >
+        <div className='font-Poppins text-sm' >
+            <ToastContainer
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable
+                pauseOnHover
+                theme="light"
+            />
             <Navbar handleLogout={handleLogout} />
             <div className='p-4' >
                 {
                     auth?.user && (
-                        <h1 className='text-xl mb-2' > Hi  {auth?.user?.name}! Welcome to Dashboard</h1>
+                        <h1 className='text-xl mb-4 pb-6 border-b border-zinc-400' > Welcome  {auth?.user?.name}</h1>
                     )
                 }
 
-                <p className='flex w-full items-center justify-center p-4' > These are your assigned students</p>
+                <p className='flex w-full items-center justify-center pb-6 pt-2 ' > These are your assigned students</p>
 
 
                 {
@@ -79,12 +91,16 @@ const TeacherHome = () => {
                                 return (
                                     <Link to={`/teacher/student-details/${student._id}`} >
                                         <div
-                                            className='flex p-2 border mb-1 rounded-md justify-between'
-                                            key={student._id} > {student.name} </div>
+                                            className='flex p-2 border mb-1 justify-between'
+                                            key={student._id} > {student.enrollment_no} &nbsp; - &nbsp; {student.name} </div>
                                     </Link>
                                 )
                             })
-                        ) : ("No assigned Students")
+                        ) : (
+                            <div className='flex justify-center p-4 mt-16 items-center text-zinc-500 cursor-default border-b pb-20' >
+                                No assigned Students :(
+                            </div>
+                        )
                     )
                 }
 

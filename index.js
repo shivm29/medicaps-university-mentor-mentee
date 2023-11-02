@@ -7,6 +7,9 @@ import cors from "cors"
 import authRoutes from "./routes/authRoutes.js"
 import docsRoutes from "./routes/docsRoutes.js"
 import studentRoutes from "./routes/studentRoutes.js"
+import teacherRoutes from "./routes/teacherRoutes.js"
+import meetingRoutes from "./routes/meetingRoutes.js"
+
 // configure env : 
 dotenv.config();
 
@@ -31,6 +34,8 @@ app.use(morgan('dev'))
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/docs', docsRoutes);
 app.use('/api/v1/students', studentRoutes);
+app.use('/api/v1/teachers', teacherRoutes);
+app.use('/api/v1/meetings', meetingRoutes);
 
 
 // basic route for homepage | REST api

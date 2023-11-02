@@ -85,7 +85,7 @@ export const getDocsController = async (req, res) => {
         })
     }
 }
-export const getDocsByTeacherController = async (req, res) => {
+export const getDocsByIDController = async (req, res) => {
     try {
 
         const { id: user_id } = req.params

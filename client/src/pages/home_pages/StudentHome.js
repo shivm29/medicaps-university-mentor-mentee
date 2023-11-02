@@ -105,7 +105,7 @@ const StudentHome = () => {
 
 
   return (
-    <div className='font-Poppins' >
+    <div className='font-Poppins text-sm' >
 
       <ToastContainer
         position="top-center"
@@ -126,16 +126,15 @@ const StudentHome = () => {
         {
           auth?.user && (
             <>
-              <h1 className='text-xl mb-2 ' >Welcome {auth?.user?.name}</h1>
+              <h1 className='text-xl mb-4 flex pl-2 pb-4 border-b border-zinc-400' >Welcome {auth?.user?.name}</h1>
             </>
           )
         }
 
-        <hr className="mb-3" />
 
-        <p className='flex w-full items-center justify-center p-4' >Here are your docs</p>
+        <p className='flex w-full items-center justify-start p-4 pl-2 text-xl ' >Here are your docs</p>
 
-        <div className='flex p-2  mb-3 justify-between border-b px-4'  > <div className='flex' >Document</div>  <div >Status</div> </div>
+        <div className='flex p-2  mb-3 justify-between border-b px-2'  > <div className='flex' >Document</div>  <div >Status</div> </div>
 
         {
           fetchingDocs ? (
@@ -150,7 +149,7 @@ const StudentHome = () => {
             documents?.map((doc, index) => {
               return (
                 <Link to={`/student/document/${doc._id}`} key={index} >
-                  <div className='flex p-2 border mb-1 rounded-md justify-between' ><div className='flex bg-slate-200 p-2 rounded-lg ' >{doc.name} </div>  <div className={`rounded-md ml-2 flex justify-center items-center p-2 text-white  hover:scale-95 ease-in-out duration-300 
+                  <div className='flex p-2 border mb-1 justify-between' ><div className='flex p-2 rounded-lg ' >{doc.name} </div>  <div className={` text-xs rounded-sm ml-2 flex justify-center items-center p-2 text-white  hover:scale-95 ease-in-out duration-300 
               ${doc?.status === "approved" ? "bg-green-400" : "bg-red-400"}
               `}   ><p>{doc.status}</p></div></div></Link>
               )
@@ -161,7 +160,7 @@ const StudentHome = () => {
 
         <br />
 
-        <p className='flex w-full items-center justify-center p-4' >Upload your Docs</p>
+        <p className='flex w-full items-center justify-start p-4 text-xl border-b px-2 border-zinc-400' >Upload your Docs</p>
 
         <form className='flex flex-col' onSubmit={uploadDocumentHandler}>
 
@@ -172,8 +171,7 @@ const StudentHome = () => {
             </div>
 
             <br />
-            {/* <input placeholder='Enter Document type..' className='flex-1 focus:outline-none p-3 border my-3' type="text" value={uploadType} onChange={(e) => setUploadType(e.target.value)} /> */}
-
+          
             <div className='flex-1 my-3 font-Poppins text-md p-2' >
               <Select
                 placeholder='Select Category'

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../context/Auth';
+import { toast, ToastContainer } from "react-toastify"
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,8 +23,6 @@ const Login = () => {
 
 
   const handleLogin = async (e) => {
-    // Clear user role before making a new login request
-    // setUserRole('');
     e.preventDefault();
     try {
       const res = await axios.post(`${apiUrl}/api/v1/auth/login`, { email, password });
@@ -39,15 +38,28 @@ const Login = () => {
         navigate(`/${res?.data?.user?.role}`);
 
       } else {
-        window.alert("Login failed");
+        toast(`${res.data.message}`);
       }
     } catch (error) {
+      toast("Login failed, an error occured");
       console.log(error);
     }
   }
 
   return (
-    <div className='flex h-screen w-full justify-center items-center font-Poppins' >
+    <div className='flex h-screen w-full justify-center items-center font-Poppins text-sm' >
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       {/* form container */}
       <div className='flex flex-col border rounded-lg h-fit md:w-1/3 w-96 p-4 ' >
         <div className='flex p-4 justify-center mb-10 '  >
@@ -57,7 +69,7 @@ const Login = () => {
           <h1 className=' text-2xl mb-3 ' >Login Form</h1>
           <input value={email} onChange={(e) => setEmail(e.target.value)} className='focus:outline-none p-3 border my-3' type="email" placeholder='Enter Email' />
           <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className='focus:outline-none p-3 border my-3' placeholder='Enter Password' />
-          <button type='submit' className='flex justify-center items-center p-3  bg-medicaps text-white font-semibold my-5 hover:scale-95 ease-in-out duration-300   ' >Login</button>
+          <button type='submit' className='flex justify-center items-center p-3  bg-medicaps text-white font-medium my-5 hover:scale-95 ease-in-out duration-300   ' >Login</button>
         </form>
       </div>
     </div>

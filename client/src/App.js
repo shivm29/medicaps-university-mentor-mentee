@@ -8,6 +8,8 @@ import TeacherRoute from "./components/protected_routes/TeacherRoute";
 import TeacherHome from "./pages/home_pages/TeacherHome";
 import StudentDetails from "./pages/StudentDetails";
 import RenderDocument from "./pages/RenderDocument";
+import AdminStudentDetails from "./pages/AdminStudentDetails";
+import AssignationWindow from "./pages/AssignationWindow";
 
 function App() {
   return (
@@ -18,11 +20,14 @@ function App() {
 
         <Route path="/student" element={<StudentRoute />}>
           <Route path="/student" element={<StudentHome />} />
-          <Route path="/student/document/:id" element={<RenderDocument />} />
+          <Route path="/student/document/:doc_id" element={<RenderDocument />} />
         </Route>
 
         <Route path="/admin" element={<AdminRoute />}>
           <Route path="/admin" element={<AdminHome />} />
+          <Route path="/admin/assignation-window" element={<AssignationWindow />} />
+          <Route path="/admin/student-details/:id" element={<AdminStudentDetails />} />
+          <Route path="/admin/student-documents/:doc_id" element={<RenderDocument />} />
         </Route>
 
         <Route path="/teacher" element={<TeacherRoute />}>

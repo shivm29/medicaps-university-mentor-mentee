@@ -1,6 +1,7 @@
 import express from 'express'
-import { requireSignIn, isTeacher } from '../middlewares/authMiddleware.js'
-import { getAssignedStudents } from '../controllers/studentsController.js';
+import { requireSignIn, isTeacher, isAdmin } from '../middlewares/authMiddleware.js'
+import { assignMentorController, assignMentorToMultiple, getAnyStudentController, getAssignedStudents, getStudentDetails } from '../controllers/studentsController.js';
+
 // create a new router
 const router = express.Router();
 
@@ -9,5 +10,21 @@ const router = express.Router();
 // get assigned students 
 // here id is the id of teacher to whom students are assigned
 router.get('/get-assigned-students', requireSignIn, isTeacher, getAssignedStudents)
+
+router.get('/get-all-students', isAdmin, getAnyStudentController)
+
+
+router.get('/get-any-student', isAdmin, getAnyStudentController)
+
+router.get('/student-details/:id', isAdmin, getStudentDetails)
+
+router.get('/student-details-by-teacher/:id', isTeacher, getStudentDetails)
+
+// route to assign mentor to a student
+router.put('/assign-mentor', isAdmin, assignMentorController)
+
+// assign mentor to multiple
+router.put('/assign-mentor-to-multiple', isAdmin, assignMentorToMultiple)
+
 
 export default router
