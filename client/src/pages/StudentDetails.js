@@ -14,7 +14,11 @@ const StudentDetails = () => {
   const [fetchingDocs, setFetchingDocs] = useState(false)
   const [studentDetails, setStudentDetails] = useState(null)
   const [fetchingStudentDetails, setFetchingStudentDetails] = useState(false)
-  const [mentorName, setMentorName] = useState("NA")
+
+  const [advice, setAdvice] = useState(null)
+  const [attendance, setAttendance] = useState(null)
+
+  const [meetings, setMeetings] = useState([])
 
   const handleLogout = () => {
     localStorage.clear();
@@ -25,11 +29,9 @@ const StudentDetails = () => {
     })
 
     window.location.reload()
-
     window.alert("You are being logged out")
-
-
   }
+
 
 
   const params = useParams();
@@ -41,7 +43,6 @@ const StudentDetails = () => {
 
       const res = await axios.get(`${baseURL}/api/v1/students/student-details-by-teacher/${params.id}`)
       setStudentDetails(res.data.student)
-      console.log(res)
       setFetchingStudentDetails(false)
 
     } catch (error) {
@@ -103,20 +104,50 @@ const StudentDetails = () => {
     }
   }
 
-  const getMentor = async () => {
+
+
+  const handleCreateMeetingHandler = async (e) => {
+    e.preventDefault()
+    try {
+      console.log(studentDetails.assigned_teacher)
+      const res = await axios.post(`${baseURL}/api/v1/meetings/create-meeting`, {
+        attendance,
+        advice,
+        student_id: studentDetails?._id,
+        mentor_id: studentDetails?.assigned_teacher
+      })
+
+      if (res.data.success) {
+        const newMeeting = res.data.meeting
+        console.log("new meeting", res.data.meeting)
+        toast("Meeting added")
+        setMeetings([...meetings, newMeeting])
+        console.log("meetings : ", meetings)
+      } else {
+        toast("Error, Try again")
+      }
+
+      setAdvice("");
+      setAttendance("")
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getMeetingsHandler = async () => {
     try {
 
-      if (studentDetails) {
-        const res = await axios.get(`${baseURL}/api/v1/teachers/get-mentor/${studentDetails?.assigned_teacher}`);
+      console.log("sadjad", studentDetails?._id)
 
-        if (res.data.success) {
-          setMentorName(res.data.mentor.name)
-        } else {
-          setMentorName("NA")
+      const res = await axios.get(`${baseURL}/api/v1/meetings/get-meetings`, {
+        params: {
+          student_id: studentDetails?._id
         }
-      }
-      else {
-        setMentorName("NA")
+      })
+
+      if (res.data.success) {
+        setMeetings(res.data.meetings)
       }
 
     } catch (error) {
@@ -125,15 +156,17 @@ const StudentDetails = () => {
   }
 
 
+
   useEffect(() => {
     getStudentDetails()
     getDocsHandler();
   }, [])
 
-
   useEffect(() => {
-    getMentor()
+    getMeetingsHandler();
   }, [studentDetails])
+
+
 
 
   return (
@@ -159,7 +192,7 @@ const StudentDetails = () => {
 
         <div className='flex w-full mb-4 flex-col' >
 
-          <h1 className='p-4 pl-0 text-lg mb-4 border-b border-zinc-400' >Student Details</h1>
+          <h1 className='p-4 pl-0 text-lg mb-4 border-b border-zinc-400' ><i class="fa-solid fa-circle-info"></i> &nbsp; Student Details</h1>
 
           {
             fetchingStudentDetails ? (
@@ -190,7 +223,7 @@ const StudentDetails = () => {
           }
 
         </div>
-        <h1 className='p-4 pl-0 text-lg mb-4 border-b border-zinc-400' > Student Documents</h1>
+        <h1 className='p-4 pl-0 text-lg mb-4 border-b border-zinc-400' ><i class="fa-regular fa-folder-open"></i> &nbsp; Student Documents</h1>
         {
           fetchingDocs ? (
             <div className='flex flex-col w-full items-center mt-10' >
@@ -205,7 +238,7 @@ const StudentDetails = () => {
             documents ? (
               documents.map((document, index) => {
                 return (
-                  <div className='flex p-2 border mb-1 justify-between px-6' key={index} > <div className='flex p-2  '> {document.name}</div>
+                  <div className='flex p-2 border mb-1 justify-between pr-6' key={index} > <div className='flex p-2  '><i class="fa-regular fa-file"></i> &nbsp; &nbsp; {document.name}</div>
 
                     <div className='flex items-center justify-center' >
 
@@ -240,8 +273,53 @@ const StudentDetails = () => {
 
           )}
 
+        <h1 className='p-4 pl-0 text-lg mb-4 border-b border-zinc-400' ><i class="fa-regular fa-handshake"></i> &nbsp; Mentor-Mentee Meetings</h1>
+
+        <div className='flex flex-col w-full' >
+
+          <form className='flex w-full justify-between' >
+
+            <div className='flex flex-1' > <input value={attendance} onChange={(e) => setAttendance(e.target.value)} type="number" placeholder='Current attendance' className='focus:outline-none p-2 border border-zinc-400' />
+
+
+              <input value={advice} onChange={(e) => setAdvice(e.target.value)} type="text" placeholder='Your advice..' className='w-1/2 mx-4 focus:outline-none p-2 border border-zinc-400 ' /></div>
+
+
+            <button onClick={handleCreateMeetingHandler} className='bg-black text-white p-2 text-xs rounded-sm' >Create New Meeting</button>
+
+
+          </form>
+
+
+          <div className='flex flex-col mt-4 mb-10' >
+            <div className='flex justify-between p-2 border-b border-zinc-400 mb-4' >
+              <div className='flex' >
+                <h3 className='p-2' ><i class="fa-regular fa-calendar"></i> &nbsp; Date / &nbsp;<i class="fa-regular fa-hand"></i> &nbsp; Attendance</h3>
+              </div>
+
+              <h3 className='mr-5' ><i class="fa-regular fa-comment"></i> &nbsp; Advice</h3>
+            </div>
+            {
+              meetings ? (
+                meetings.map((meeting, index) => {
+                  return (
+                    <div className='flex p-2 mb-1 border justify-between' >
+                      <div className='flex' >
+                        <h3 className='p-2 ' ><i class="fa-regular fa-calendar"></i> &nbsp;{meeting?.createdAt?.split("T")[0]}</h3>
+                        <h3 className='p-2 mr-10' ><i class="fa-regular fa-hand"></i> &nbsp;{meeting?.attendance}%</h3>
+                      </div>
+                      <h3 className='p-2' ><i class="fa-regular fa-comment"></i> &nbsp; {meeting?.advice}</h3>
+                    </div>
+                  )
+                })
+              ) : ("")
+            }
+          </div>
+
+        </div>
+
       </div>
-    </div >
+    </div>
   )
 }
 

@@ -89,16 +89,16 @@ const AdminHome = () => {
             <Navbar handleLogout={handleLogout} />
 
             <div className='p-4' >
-                <h1 className='text-xl border-b border-zinc-400 mb-5 pb-3' >Welcome {auth?.user?.name} </h1>
+                <h1 className='text-xl border-b border-zinc-400 mb-5 pb-3' ><i class="fa-solid fa-hands-praying"></i> &nbsp; Welcome {auth?.user?.name} </h1>
 
 
                 <div className='flex min-w-full border-b border-zinc-400 pb-24' >
                     <div className='flex-1 flex flex-col' >
-                        <h3 className='mb-10 text-base' >Search for Students</h3>
+                        <h3 className='mb-10 text-base' ><i class="fa-solid fa-user-group"></i> &nbsp; Search for Students</h3>
                         <form action="" className='flex flex-col mr-3' onSubmit={submitStudentHandler} >
 
                             <div className='flex justify-between' > <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} className=' outline outline-1  p-3 flex-1  ' placeholder='Search here...' />
-                                <button type='submit' className='bg-black text-white w-48 p-3 place-self-end  hover:bg-zinc-700  ease-in-out duration-300  ' >Search</button>
+                                <button type='submit' className='bg-black text-white w-48 p-3 place-self-end  hover:bg-zinc-700  ease-in-out duration-300  ' ><i class="fa-solid fa-magnifying-glass"></i> &nbsp;Search</button>
                             </div>
 
                             <div className='flex w-full flex-col bg-slate-200 mt-4 pl-4 rounded-lg' >
@@ -172,11 +172,11 @@ const AdminHome = () => {
                     <div className='flex-1 flex flex-col' >
 
 
-                        <h3 className='mb-10 text-base' >Search for Teachers</h3>
+                        <h3 className='mb-10 text-base' ><i class="fa-solid fa-user-group"></i> &nbsp; Search for Teachers</h3>
                         <form action="" className='flex flex-col mr-3' onSubmit={submitTeacherHandler} >
 
                             <div className='flex justify-between' > <input type="text" value={teacherQuery} onChange={(e) => setTeacherQuery(e.target.value)} className=' outline outline-1  p-3 flex-1' placeholder='Search here...' />
-                                <button type='submit' className='bg-black text-white w-48 p-3 place-self-end hover:bg-zinc-700  ease-in-out duration-300  ' >Search</button>
+                                <button type='submit' className='bg-black text-white w-48 p-3 place-self-end hover:bg-zinc-700  ease-in-out duration-300  ' ><i class="fa-solid fa-magnifying-glass"></i> &nbsp;Search</button>
                             </div>
 
                             <div className='flex w-full flex-col bg-slate-200 mt-4 pl-4 rounded-lg' >

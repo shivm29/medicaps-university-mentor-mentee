@@ -61,15 +61,15 @@ const Login = () => {
         theme="light"
       />
       {/* form container */}
-      <div className='flex flex-col border rounded-lg h-fit md:w-1/3 w-96 p-4 ' >
+      <div className='flex flex-col border  rounded-lg h-fit md:w-1/3 w-96 p-4 ' >
         <div className='flex p-4 justify-center mb-10 '  >
           <img src="/images/logo-navbar.png" alt="" />
         </div>
         <form onSubmit={handleLogin} className='flex flex-col' >
           <h1 className=' text-2xl mb-3 ' >Login Form</h1>
-          <input value={email} onChange={(e) => setEmail(e.target.value)} className='focus:outline-none p-3 border my-3' type="email" placeholder='Enter Email' />
-          <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className='focus:outline-none p-3 border my-3' placeholder='Enter Password' />
-          <button type='submit' className='flex justify-center items-center p-3  bg-medicaps text-white font-medium my-5 hover:scale-95 ease-in-out duration-300   ' >Login</button>
+          <input value={email} onChange={(e) => setEmail(e.target.value)} className='focus:outline-none p-3 border border-zinc-400 my-3' type="email" placeholder='Enter Email' />
+          <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className='focus:outline-none p-3 border border-zinc-400 my-3' placeholder='Enter Password' />
+          <button type='submit' className='flex justify-center items-center p-3  bg-medicaps text-white font-medium my-10 hover:scale-95 ease-in-out duration-300  ' >Login</button>
         </form>
       </div>
     </div>

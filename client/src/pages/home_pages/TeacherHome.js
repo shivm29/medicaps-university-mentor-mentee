@@ -69,11 +69,11 @@ const TeacherHome = () => {
             <div className='p-4' >
                 {
                     auth?.user && (
-                        <h1 className='text-xl mb-4 pb-6 border-b border-zinc-400' > Welcome  {auth?.user?.name}</h1>
+                        <h1 className='text-xl mb-4 pb-6 border-b border-zinc-400' > <i class="fa-solid fa-hands-praying"></i> &nbsp; Welcome  {auth?.user?.name}</h1>
                     )
                 }
 
-                <p className='flex w-full items-center justify-center pb-6 pt-2 ' > These are your assigned students</p>
+                <p className='flex w-full items-center justify-start pb-6 pt-2 ' > <i class="fa-solid fa-list-check"></i> &nbsp; These are your assigned students</p>
 
 
                 {
@@ -91,8 +91,8 @@ const TeacherHome = () => {
                                 return (
                                     <Link to={`/teacher/student-details/${student._id}`} >
                                         <div
-                                            className='flex p-2 border mb-1 justify-between'
-                                            key={student._id} > {student.enrollment_no} &nbsp; - &nbsp; {student.name} </div>
+                                            className='flex p-2 border mb-1'
+                                            key={student._id} ><i class="fa-regular fa-user"></i> &nbsp; {student.enrollment_no} &nbsp; - &nbsp; {student.name} </div>
                                     </Link>
                                 )
                             })
