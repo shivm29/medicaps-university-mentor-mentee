@@ -79,15 +79,3 @@ const Login = () => {
 export default Login;
 
 
-/**
- 
- <section className=' bg-black text-white ' >
-      <form onSubmit={handleLogin}>
-        <h1 >Login Form</h1>
-        <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder='Enter Email' />
-        <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder='Enter Password' />
-        <button type='submit'>Login</button>
-      </form>
-    </section>
-
- */

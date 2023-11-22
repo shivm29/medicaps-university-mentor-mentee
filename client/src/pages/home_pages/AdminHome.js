@@ -212,7 +212,8 @@ const AdminHome = () => {
                                     teachers ? (
                                         teachers.map((teacher, index) => {
                                             return (
-                                                <div key={index} className={`flex rounded-lg p-3 border mb-2`} > {teacher.name} </div>
+                                                <Link to={`/admin/teacher-details/${teacher._id}`} >
+                                                    <div key={index} className={`flex rounded-lg p-3 border mb-2`} > {teacher.name} </div></Link>
                                             )
                                         })
                                     ) : (

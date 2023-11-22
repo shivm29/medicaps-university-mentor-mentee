@@ -152,3 +152,31 @@ export const assignMentorToMultiple = async (req, res) => {
         console.log(error)
     }
 }
+
+export const getRangeStudents = async (req, res) => {
+    try {
+        console.log("hii")
+        const { startRange, endRange } = req.query;
+
+        console.log(startRange, "start")
+        console.log(endRange, "end")
+
+
+        const studentsInRange = await userModel.find({
+            enrollment_no: { $gte: startRange, $lte: endRange },
+        });
+
+        console.log(studentsInRange)
+
+        res.status(200).send({
+            success: true,
+            studentsInRange
+        })
+
+    } catch (error) {
+        res.status(400).send({
+            error,
+            success: false
+        })
+    }
+}

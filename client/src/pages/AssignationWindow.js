@@ -17,6 +17,8 @@ const AssignationWindow = () => {
     const [assigning, setAssigning] = useState(false)
     const [fetchingStudents, setFetchingStudents] = useState(false)
     const [fetchingMentors, setFetchingMentors] = useState(false)
+    const [startRange, setStartRange] = useState(null)
+    const [endRange, setEndRange] = useState(null)
     const [auth, setAuth] = useAuth()
 
     const baseURL = process.env.REACT_APP_API;
@@ -43,6 +45,18 @@ const AssignationWindow = () => {
         }
     };
 
+    const handleSelectAll = () => {
+        setSelectedStudents(students.map((student) => student._id));
+    }
+
+    const handleDeselectAll = () => {
+        setSelectedStudents([]);
+    }
+
+
+
+
+
     const getAllStudents = async () => {
         try {
             setFetchingStudents(true)
@@ -57,6 +71,8 @@ const AssignationWindow = () => {
                 setStudents(res.data.students);
             }
             setFetchingStudents(false)
+            setEndRange("")
+            setStartRange("")
         } catch (error) {
             setFetchingStudents(false)
             console.log(error);
@@ -101,6 +117,29 @@ const AssignationWindow = () => {
         } catch (error) {
 
             setAssigning(false)
+            console.log(error)
+        }
+    }
+
+    const handleGetRangeStudent = async () => {
+        try {
+            const res = await axios.get(`${baseURL}/api/v1/students/range`, {
+                params: {
+                    startRange,
+                    endRange
+                }
+            })
+
+            if (res.data.success) {
+                setStudents(res.data.studentsInRange);
+                setEndRange("")
+                setStartRange("")
+            }
+            else {
+                toast("An Error Occured :(");
+            }
+
+        } catch (error) {
             console.log(error)
         }
     }
@@ -153,10 +192,26 @@ const AssignationWindow = () => {
                         className='p-3 border border-black w-full focus:outline-none mb-5'
                     />
                     <div className='flex flex-col'>
+                        <p>Search by Range..</p>
+                        <div className='flex w-full p-2' >
+                            <input value={startRange} onChange={(e) => setStartRange(e.target.value)} className='flex-1 mr-2 p-2 border border-black focus:outline-none' type="text" placeholder='Enter Starting Enrollment' />
 
-                        <button disabled={selectedStudents.length === 0 || selectedMentor === null} className={`flex p-2 bg-black mb-5 text-white justify-center ${(selectedStudents.length === 0 || selectedMentor === null) && "bg-zinc-400"} ease-in-out duration-300 `} onClick={handleAssignation}>
+                            <input
+                                value={endRange} onChange={(e) => setEndRange(e.target.value)}
+                                className='flex-1 p-2 border border-black focus:outline-none' type="text" placeholder='Enter Ending Enrollment' />
+                        </div>
+
+                        <button onClick={handleGetRangeStudent} className='hover:bg-gray-700 flex p-2 bg-black mb-5 text-white justify-center ease-in-out duration-300 w-fit px-4 place-self-end' >Search</button>
+
+                       <div className='flex' >
+                       <button onClick={handleSelectAll} className='hover:bg-gray-700 flex mr-2 p-2 bg-black mb-5 text-white justify-center ease-in-out duration-300 w-fit px-4' >Select All</button>
+                        <button onClick={handleDeselectAll} className='hover:bg-gray-700 flex p-2 bg-black mb-5 text-white justify-center ease-in-out duration-300 w-fit px-4' >Unselect All</button>
+                        <button disabled={selectedStudents.length === 0 || selectedMentor === null} className={`ml-2 flex-1 flex p-2 bg-black mb-5 text-white justify-center ${(selectedStudents.length === 0 || selectedMentor === null) && "bg-zinc-400"} ease-in-out duration-300 `} onClick={handleAssignation}>
                             Assign
                         </button>
+                       </div>
+
+                       
 
                         {
                             fetchingStudents ? (
@@ -164,12 +219,11 @@ const AssignationWindow = () => {
                                     <ReactLoading type="bubbles" color="#242424"
                                         height={70} width={70}
                                     />
-
                                     <p>Fetching Students..</p>
                                 </div>
                             ) : (
                                 <ul>
-                                    {students.map((student) => (
+                                    {students?.map((student) => (
                                         <li key={student.id} className='p-2 border mb-1' >
                                             <label  >
                                                 <input
@@ -178,7 +232,7 @@ const AssignationWindow = () => {
                                                     onChange={() => handleStudentSelection(student._id)}
                                                     className=''
                                                 />
-                                                &nbsp; {student.name}
+                                                &nbsp; {student.enrollment_no} &nbsp; {student.name}
                                             </label>
                                         </li>
                                     ))}

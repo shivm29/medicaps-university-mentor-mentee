@@ -10,6 +10,7 @@ import StudentDetails from "./pages/StudentDetails";
 import RenderDocument from "./pages/RenderDocument";
 import AdminStudentDetails from "./pages/AdminStudentDetails";
 import AssignationWindow from "./pages/AssignationWindow";
+import AdminTeacherDetails from "./pages/AdminTeacherDetails";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/admin" element={<AdminHome />} />
           <Route path="/admin/assignation-window" element={<AssignationWindow />} />
           <Route path="/admin/student-details/:id" element={<AdminStudentDetails />} />
+          <Route path="/admin/teacher-details/:id" element={<AdminTeacherDetails />} />
           <Route path="/admin/student-documents/:doc_id" element={<RenderDocument />} />
         </Route>
 

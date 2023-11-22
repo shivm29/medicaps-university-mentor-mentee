@@ -95,8 +95,6 @@ const StudentHome = () => {
 
   useEffect(() => {
     getDocsHandler();
-
-
   }, [])
 
   const options = [
@@ -259,9 +257,6 @@ const StudentHome = () => {
               <input id="dropzone-file" onChange={(e) => setUploadDocument(e.target.files[0])} type="file" className="hidden" />
             </label>
           </div>
-
-
-
 
           <button className='flex justify-center items-center p-3 bg-black text-white  hover:scale-95 ease-in-out duration-300 ' disabled={uploading} type='submit' >Submit</button>
         </form>
